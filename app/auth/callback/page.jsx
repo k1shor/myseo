@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import CallbackClient from "./callbackClient";
+import CallbackClient from "./CallbackClient";
 
 
 export const dynamic = "force-dynamic"; // prevents static prerender
