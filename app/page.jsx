@@ -4,6 +4,7 @@ import { api } from "../lib/api";
 import GlassCard from "../components/GlassCard";
 import GradientBlob from "../components/GradientBlob";
 import { motion } from "framer-motion";
+import Reviews from "../components/Reviews";
 
 async function getLatest() {
   try {
@@ -86,6 +87,9 @@ export default async function HomePage() {
             <p className="mt-2 text-sm text-slate-600">Per-blog metadata, keywords, OG images, and clean architecture.</p>
           </GlassCard>
         </section>
+ <Reviews/>
+
+
 
         <section className="mt-12">
           <div className="flex items-end justify-between gap-4">
