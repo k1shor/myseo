@@ -88,7 +88,7 @@ function ReviewCard({ review }) {
         <div className="flex items-start justify-between gap-4">
           <div className="inline-flex items-center gap-2 rounded-full border border-white/60 bg-white/55 px-3 py-1 text-xs font-semibold text-slate-800 shadow-glass backdrop-blur">
             <Quote className="h-3.5 w-3.5" />
-            
+
           </div>
           <StarRating rating={review?.rating} />
         </div>
@@ -154,7 +154,12 @@ export default function Reviews() {
 
         if (!alive) return;
 
-        setItems(Array.isArray(list) ? list : []);
+        // ✅ show only published reviews
+        const published = Array.isArray(list)
+          ? list.filter((r) => r?.isPublished === true)
+          : [];
+
+        setItems(published);
         setStatus("ready");
       } catch {
         if (!alive) return;
@@ -208,7 +213,7 @@ export default function Reviews() {
 
   return (
     <section className="relative mt-12">
-      
+
 
       <div className="relative mx-auto max-w-6xl px-4 py-12">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
@@ -255,19 +260,19 @@ export default function Reviews() {
           >
             {status === "loading"
               ? Array.from({ length: perView }).map((_, i) => (
-                  <div key={i} className="shrink-0 p-3" style={{ width: `${100 / perView}%` }}>
-                    <SkeletonCard />
-                  </div>
-                ))
+                <div key={i} className="shrink-0 p-3" style={{ width: `${100 / perView}%` }}>
+                  <SkeletonCard />
+                </div>
+              ))
               : reviews.map((r, i) => (
-                  <div
-                    key={r?._id || r?.id || `review-${i}`}
-                    className="shrink-0 p-3"
-                    style={{ width: `${100 / perView}%` }}
-                  >
-                    <ReviewCard review={r} />
-                  </div>
-                ))}
+                <div
+                  key={r?._id || r?.id || `review-${i}`}
+                  className="shrink-0 p-3"
+                  style={{ width: `${100 / perView}%` }}
+                >
+                  <ReviewCard review={r} />
+                </div>
+              ))}
           </div>
         </div>
 

@@ -13,7 +13,6 @@ export default function AdminHome() {
   useEffect(() => {
     setMounted(true);
 
-    // ✅ Only run auth checks on client
     const u = getUser();
 
     if (!u) {
@@ -63,18 +62,40 @@ export default function AdminHome() {
       {
         href: "/admin/about",
         title: "About Section",
-        desc: "Edit About page content + meta tags + OG/Twitter cards.",
+        desc: "Edit About page content + meta tags.",
         icon: "✨",
         gradient: "from-violet-200/40 via-sky-200/40 to-pink-200/40",
         badge: "NEW"
+      },
+      {
+        href: "/admin/testimonials",
+        title: "Testimonials",
+        desc: "Add, edit and manage client testimonials.",
+        icon: "⭐",
+        gradient: "from-sky-200/40 via-violet-200/40 to-pink-200/40"
       }
     ],
     []
   );
 
-  // ✅ Prevent hydration mismatch:
-  // Server render: returns stable loader
-  // First client render: also returns stable loader (until mounted/checking resolves)
+  const testimonials = [
+    {
+      name: "Sarah Khan",
+      role: "Ecommerce Founder",
+      text: "Our organic traffic doubled in 3 months. The strategy was clear, data-driven, and beautifully executed."
+    },
+    {
+      name: "James Walker",
+      role: "Startup CEO",
+      text: "From SEO to content funnels, everything felt premium. The site now converts far better than before."
+    },
+    {
+      name: "Anita Sharma",
+      role: "Marketing Manager",
+      text: "Professional, creative, and results-focused. Our brand visibility improved significantly."
+    }
+  ];
+
   if (!mounted || checking) {
     return (
       <PageShell title="Admin Dashboard" kicker="CMS">
@@ -88,7 +109,6 @@ export default function AdminHome() {
     );
   }
 
-  // If redirected, this won’t matter, but keep safe:
   if (!user) return null;
 
   return (
@@ -97,58 +117,52 @@ export default function AdminHome() {
       kicker="CMS"
       subtitle={user?.email ? `Signed in as ${user.email}` : ""}
     >
+      {/* cards */}
       <div className="grid md:grid-cols-3 gap-4">
         {cards.map((c) => (
-          <Card
-            key={c.href}
-            href={c.href}
-            title={c.title}
-            desc={c.desc}
-            icon={c.icon}
-            gradient={c.gradient}
-            badge={c.badge}
-          />
+          <Card key={c.href} {...c} />
         ))}
       </div>
 
+      {/* notes + quick actions */}
       <div className="mt-8 grid lg:grid-cols-12 gap-4">
         <div className="lg:col-span-8 rounded-3xl border border-white/50 bg-white/45 p-6 shadow-soft backdrop-blur-xl">
-          <div className="text-sm font-semibold text-slate-900">Operational Notes</div>
+          <div className="text-sm font-semibold text-slate-900">
+            Operational Notes
+          </div>
           <ul className="mt-3 space-y-2 text-sm text-slate-700">
             <li>• Keep slugs short and intent-focused.</li>
             <li>• Always add OG image for share previews.</li>
-            <li>• Use keywords naturally; don’t stuff.</li>
-            <li>• For AI SEO / GEO, prioritize clarity + entity signals.</li>
+            <li>• Use keywords naturally.</li>
+            <li>• Prioritize clarity + entity signals.</li>
           </ul>
-          <div className="mt-4 text-xs text-slate-500">
-            Tip: publish only after previewing on mobile + desktop ✨
-          </div>
         </div>
 
         <div className="lg:col-span-4 rounded-3xl border border-white/50 bg-gradient-to-br from-pink-200/35 via-violet-200/35 to-sky-200/35 p-6 shadow-soft backdrop-blur-xl">
-          <div className="text-sm font-semibold text-slate-900">Quick Actions</div>
+          <div className="text-sm font-semibold text-slate-900">
+            Quick Actions
+          </div>
           <div className="mt-4 flex flex-col gap-2">
-            <Link
-              href="/admin/about"
-              className="rounded-2xl bg-slate-900 px-4 py-2 text-xs font-semibold text-white shadow-soft hover:bg-slate-800 transition"
-            >
-              Edit About + Meta
+            <Link href="/admin/about" className="rounded-2xl border border-white/60 bg-white/50 px-4 py-2 text-xs font-semibold text-slate-800 shadow-glass hover:bg-white/65 transition backdrop-blur">
+              Edit About
+            </Link>
+            <Link href="/admin/blogs" className="rounded-2xl border border-white/60 bg-white/50 px-4 py-2 text-xs font-semibold text-slate-800 shadow-glass hover:bg-white/65 transition backdrop-blur">
+              Create Blog
+            </Link>
+            <Link href="/admin/settings" className="rounded-2xl border border-white/60 bg-white/50 px-4 py-2 text-xs font-semibold text-slate-800 shadow-glass hover:bg-white/65 transition backdrop-blur">
+              Settings
             </Link>
             <Link
-              href="/admin/blogs"
+              href="/admin/testimonials"
               className="rounded-2xl border border-white/60 bg-white/50 px-4 py-2 text-xs font-semibold text-slate-800 shadow-glass hover:bg-white/65 transition backdrop-blur"
             >
-              Create Blog Post
-            </Link>
-            <Link
-              href="/admin/settings"
-              className="rounded-2xl border border-white/60 bg-white/50 px-4 py-2 text-xs font-semibold text-slate-800 shadow-glass hover:bg-white/65 transition backdrop-blur"
-            >
-              Update Site Settings
+              Manage Testimonials
             </Link>
           </div>
         </div>
       </div>
+
+      
     </PageShell>
   );
 }
@@ -157,40 +171,24 @@ function Card({ href, title, desc, icon, gradient, badge }) {
   return (
     <Link
       href={href}
-      className={[
-        "group relative overflow-hidden rounded-3xl border border-white/50",
-        "bg-white/45 p-6 shadow-soft backdrop-blur-xl",
-        "hover:-translate-y-1 transition"
-      ].join(" ")}
+      className="group relative overflow-hidden rounded-3xl border border-white/50 bg-white/45 p-6 shadow-soft backdrop-blur-xl hover:-translate-y-1 transition"
     >
-      {/* gradient wash */}
       <div
-        className={[
-          "pointer-events-none absolute -inset-1 opacity-70 blur-2xl",
-          "bg-gradient-to-br",
-          gradient || "from-pink-200/40 via-violet-200/40 to-sky-200/40"
-        ].join(" ")}
+        className={`pointer-events-none absolute -inset-1 opacity-70 blur-2xl bg-gradient-to-br ${gradient}`}
       />
-
       <div className="relative">
-        <div className="flex items-start justify-between gap-3">
+        <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-lg">{icon || "📌"}</span>
-            <div className="text-sm font-semibold text-slate-900">{title}</div>
+            <span>{icon}</span>
+            <div className="text-sm font-semibold text-slate-900">
+              {title}
+            </div>
           </div>
-
-          {badge ? (
-            <span className="rounded-full border border-white/60 bg-white/55 px-2 py-1 text-[10px] font-semibold text-slate-800 shadow-glass backdrop-blur">
-              {badge}
-            </span>
-          ) : null}
+          {badge && (
+            <span className="badge">{badge}</span>
+          )}
         </div>
-
-        <div className="mt-2 text-sm text-slate-600">{desc}</div>
-
-        <div className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-slate-900 underline">
-          Open <span className="transition-transform group-hover:translate-x-0.5">→</span>
-        </div>
+        <p className="mt-2 text-sm text-slate-600">{desc}</p>
       </div>
     </Link>
   );
