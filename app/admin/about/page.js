@@ -721,7 +721,7 @@ export default function DashboardAboutPage() {
             <div className="text-sm font-semibold text-slate-900">Tip</div>
             <p className="mt-2 text-sm text-slate-700 leading-relaxed">
               If you don’t see data loading, confirm your admin token exists in{" "}
-              <span className="font-semibold">localStorage("token")</span> and your
+              <span className="font-semibold">localStorage(token)</span> and your
               <span className="font-semibold"> NEXT_PUBLIC_API_URL</span> points to the backend.
             </p>
           </div>
