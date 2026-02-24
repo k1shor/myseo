@@ -4,6 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { LogOut, LayoutDashboard, User2 } from "lucide-react";
 import { getUser, logout } from "../lib/auth";
+import GradientBlob from "./GradientBlob";
 
 const links = [
   { href: "/", label: "Home" },

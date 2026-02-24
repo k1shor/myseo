@@ -19,10 +19,14 @@ export default async function HomePage() {
   const latest = await getLatest();
 
   return (
-    <main className="relative">
+    <main className="relative ">
       <GradientBlob className="left-[-60px] top-[-40px]" />
-      <GradientBlob className="right-[-90px] top-[60px]" />
-      <section className="mx-auto max-w-6xl px-4 pt-14">
+      <GradientBlob className="right-[-0px] top-[60px]" />
+      <GradientBlob className="left-[60px] top-[780px]" />
+      <GradientBlob className="right-[60px] top-[1180px]" />
+      <GradientBlob className="left-[100px] top-[1580px]" />
+      <GradientBlob className="left-[760px] top-[2080px]" />
+      <section className="mx-auto max-w-6xl px-4 pt-14 pb-20">
         <div className="rounded-[2rem] border border-white/50 bg-white/45 p-10 shadow-soft backdrop-blur-xl overflow-hidden">
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             <div>
