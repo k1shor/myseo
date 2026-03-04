@@ -6,7 +6,7 @@ import {
   SortableContext,
   useSortable,
   verticalListSortingStrategy,
-  arrayMove
+  arrayMove,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { motion } from "framer-motion";
@@ -17,7 +17,7 @@ import {
   updateTool,
   deleteTool,
   reorderTools,
-  uploadToolImage
+  uploadToolImage,
 } from "../../../lib/toolsApi";
 import { getUser } from "../../../lib/auth";
 
@@ -25,9 +25,14 @@ function cx(...xs) {
   return xs.filter(Boolean).join(" ");
 }
 
-function SortableItem({ tool, onEdit, onDelete }) {
-  const id = tool?._id || tool?.id;
-  if (!id) return null;
+/**
+ * Sortable row.
+ * ✅ Hooks are NEVER conditional.
+ * ✅ Uses a stable fallback id if tool has no _id/id (shouldn't happen, but safe).
+ */
+function SortableItem({ tool, onEdit, onDelete, fallbackId }) {
+  const realId = tool?._id || tool?.id;
+  const sortableId = realId ?? fallbackId;
 
   const {
     attributes,
@@ -36,26 +41,29 @@ function SortableItem({ tool, onEdit, onDelete }) {
     setActivatorNodeRef,
     transform,
     transition,
-    isDragging
-  } = useSortable({ id });
+    isDragging,
+  } = useSortable({ id: sortableId });
 
   const style = {
     transform: CSS.Transform.toString(transform),
-    transition
+    transition,
   };
+
+  const disabled = !realId; // missing real id → no edit/delete/reorder persistence
 
   return (
     <motion.div
       ref={setNodeRef}
       style={style}
       layout
-      whileHover={{ y: -2 }}
+      whileHover={disabled ? undefined : { y: -2 }}
       className={cx(
         "group relative overflow-hidden rounded-3xl border border-white/60",
         "bg-white/55 p-5 shadow-glass backdrop-blur-xl",
         "flex items-center justify-between gap-4",
         "transition hover:shadow-purple-200/70",
-        isDragging ? "opacity-75 ring-2 ring-slate-900/10" : ""
+        isDragging ? "opacity-75 ring-2 ring-slate-900/10" : "",
+        disabled ? "opacity-60" : ""
       )}
     >
       {/* gradient wash */}
@@ -81,6 +89,12 @@ function SortableItem({ tool, onEdit, onDelete }) {
           <div className="text-sm text-slate-600 line-clamp-2">
             {tool?.description || ""}
           </div>
+
+          {disabled && (
+            <div className="mt-1 text-[11px] text-rose-700">
+              Missing id: item can’t be reordered/edited
+            </div>
+          )}
         </div>
       </div>
 
@@ -89,14 +103,18 @@ function SortableItem({ tool, onEdit, onDelete }) {
         <button
           ref={setActivatorNodeRef}
           type="button"
-          title="Drag to reorder"
+          title={disabled ? "Missing id" : "Drag to reorder"}
+          disabled={disabled}
           className={cx(
-            "cursor-grab active:cursor-grabbing select-none",
+            "select-none",
             "rounded-2xl border border-white/60 bg-white/60 px-3 py-2 text-xs font-semibold",
-            "text-slate-800 shadow-glass hover:bg-white/80 transition"
+            "text-slate-800 shadow-glass transition",
+            disabled
+              ? "cursor-not-allowed opacity-60"
+              : "cursor-grab active:cursor-grabbing hover:bg-white/80"
           )}
-          {...attributes}
-          {...listeners}
+          {...(!disabled ? attributes : {})}
+          {...(!disabled ? listeners : {})}
         >
           ⠿
         </button>
@@ -104,10 +122,14 @@ function SortableItem({ tool, onEdit, onDelete }) {
         {/* ✅ Edit */}
         <button
           type="button"
-          onClick={() => onEdit(tool)}
+          disabled={disabled}
+          onClick={() => {
+            if (!disabled) onEdit(tool);
+          }}
           className={cx(
             "rounded-2xl border border-white/60 bg-white/60 px-3 py-2 text-xs font-semibold",
-            "text-slate-800 shadow-glass hover:bg-white/80 transition"
+            "text-slate-800 shadow-glass transition",
+            disabled ? "cursor-not-allowed opacity-60" : "hover:bg-white/80"
           )}
         >
           Edit
@@ -116,10 +138,14 @@ function SortableItem({ tool, onEdit, onDelete }) {
         {/* ✅ Delete */}
         <button
           type="button"
-          onClick={() => onDelete(id)}
+          disabled={disabled}
+          onClick={() => {
+            if (!disabled) onDelete(realId);
+          }}
           className={cx(
             "rounded-2xl border border-rose-200/70 bg-rose-100/55 px-3 py-2 text-xs font-semibold",
-            "text-rose-900 shadow-glass hover:bg-rose-100/75 transition"
+            "text-rose-900 shadow-glass transition",
+            disabled ? "cursor-not-allowed opacity-60" : "hover:bg-rose-100/75"
           )}
         >
           Delete
@@ -150,10 +176,14 @@ export default function AdminTools() {
     setItems(res?.items || []);
   }
 
-  const sortableIds = useMemo(
-    () => items.map((i) => i?._id || i?.id).filter(Boolean),
-    [items]
-  );
+  /**
+   * ✅ SortableContext requires that every row has a stable id.
+   * We provide fallback ids for safety, but ideally server ALWAYS returns _id.
+   */
+  const sortableIds = useMemo(() => {
+    if (!Array.isArray(items)) return [];
+    return items.map((i, idx) => i?._id || i?.id || `fallback-${idx}`);
+  }, [items]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -162,7 +192,7 @@ export default function AdminTools() {
     const payload = {
       name: String(form.name || "").trim(),
       description: String(form.description || "").trim(),
-      image: String(form.image || "").trim()
+      image: String(form.image || "").trim(),
     };
 
     if (!payload.name || !payload.description || !payload.image) {
@@ -207,7 +237,7 @@ export default function AdminTools() {
     setForm({
       name: tool?.name || "",
       description: tool?.description || "",
-      image: tool?.image || ""
+      image: tool?.image || "",
     });
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -236,23 +266,27 @@ export default function AdminTools() {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
-    const oldIndex = items.findIndex((i) => (i._id || i.id) === active.id);
-    const newIndex = items.findIndex((i) => (i._id || i.id) === over.id);
+    // ✅ Use sortableIds (covers fallback ids too)
+    const oldIndex = sortableIds.findIndex((x) => x === active.id);
+    const newIndex = sortableIds.findIndex((x) => x === over.id);
     if (oldIndex < 0 || newIndex < 0) return;
 
     const newItems = arrayMove(items, oldIndex, newIndex);
     setItems(newItems);
 
+    // Only persist reorder if ALL items have real ids
+    const hasAllRealIds = newItems.every((it) => it?._id || it?.id);
+    if (!hasAllRealIds) return;
+
     try {
       await reorderTools({
         items: newItems.map((item, index) => ({
           id: item._id || item.id,
-          order: index
-        }))
+          order: index,
+        })),
       });
     } catch (e) {
       console.error("Reorder failed:", e);
-      // optional: reload to restore order from server
       await load();
     }
   }
@@ -291,7 +325,9 @@ export default function AdminTools() {
 
             <textarea
               value={form.description}
-              onChange={(e) => setForm({ ...form, description: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, description: e.target.value })
+              }
               placeholder="Description"
               className="w-full rounded-2xl border border-white/60 bg-white/55 px-4 py-2 text-sm text-slate-900 shadow-glass backdrop-blur outline-none focus:ring-2 focus:ring-slate-900/10"
               rows={6}
@@ -332,11 +368,15 @@ export default function AdminTools() {
         {/* List */}
         <div className="lg:col-span-8 space-y-4">
           <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-            <SortableContext items={sortableIds} strategy={verticalListSortingStrategy}>
-              {items.map((tool) => (
+            <SortableContext
+              items={sortableIds}
+              strategy={verticalListSortingStrategy}
+            >
+              {items.map((tool, idx) => (
                 <SortableItem
-                  key={tool._id || tool.id}
+                  key={tool?._id || tool?.id || `fallback-key-${idx}`}
                   tool={tool}
+                  fallbackId={`fallback-${idx}`}
                   onEdit={handleEdit}
                   onDelete={handleDelete}
                 />
