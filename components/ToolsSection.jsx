@@ -83,6 +83,7 @@ export default function ToolsSection() {
                 <img
                   src={tool.image}
                   alt={tool.name}
+                  title = {tool.description}
                   className="relative h-32 w-32 object-contain drop-shadow-[0_25px_45px_rgba(2,6,23,0.25)] transition-transform duration-300 group-hover:scale-110"
                   draggable={false}
                 />
