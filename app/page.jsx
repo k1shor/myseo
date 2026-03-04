@@ -5,6 +5,7 @@ import GlassCard from "../components/GlassCard";
 import GradientBlob from "../components/GradientBlob";
 import { motion } from "framer-motion";
 import Reviews from "../components/Reviews";
+import ToolsSection from "../components/ToolsSection";
 
 async function getLatest() {
   try {
@@ -32,14 +33,13 @@ export default async function HomePage() {
             <div>
               <div className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-3 py-1 text-xs font-medium text-white">
                 <Sparkles className="h-4 w-4" />
-                Pastel-growth marketing
+                Delivering data-driven SEO growth
               </div>
               <h1 className="mt-5 text-4xl md:text-5xl font-semibold tracking-tight text-slate-900">
-                Make your brand <span className="bg-gradient-to-r from-pink-500 via-violet-500 to-sky-500 bg-clip-text text-transparent">unforgettable</span> — and searchable.
+                Dominate Search <br /><span className="bg-gradient-to-r from-pink-500 via-violet-500 to-sky-500 bg-clip-text text-transparent">Own Visibility</span> —  <br />Win Everywhere.
               </h1>
               <p className="mt-4 text-slate-600 text-lg leading-relaxed">
-                A premium, SEO-first blog + service site for digital marketers who want elegance *and* performance.
-                Every page is built with clean structure, speed, and metadata that ranks.
+                I’m Hemanta Maharjan, an SEO Freelancer helping businesses rank on traditional search engines like Google, Bing, and DuckDuckGo, dominate local results on Google Maps, and gain visibility inside AI-powered search platforms like ChatGPT, Gemini, Perplexity, and Google’s AI Overviews through advanced LLM SEO (Generative Engine Optimization).
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link href="/services" className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-5 py-3 text-white shadow-soft hover:opacity-90 transition">
@@ -60,15 +60,16 @@ export default async function HomePage() {
             <div className="relative">
               <div className="rounded-[2rem] border border-white/60 bg-gradient-to-br from-white/60 to-white/20 p-6 shadow-soft backdrop-blur-xl">
                 <div className="grid grid-cols-2 gap-4">
-                  <StatCard title="Organic traffic" value="+218%" sub="90 days" />
-                  <StatCard title="Keyword wins" value="+43" sub="Top 10" />
-                  <StatCard title="Leads" value="+3.7x" sub="Conversion" />
-                  <StatCard title="ROI" value="10.4x" sub="Avg campaigns" />
+                  <StatCard title="Top Rated" value="Upwork Talent Badge" sub="" />
+                  <StatCard title="Success Rate" value="65+" sub="Job Completed" />
+                  <StatCard title="Result Oriented" value="100%" sub="Job Success" />
+                  <StatCard title="Experienced" value="19000+" sub="Hours worked" />
                 </div>
                 <div className="mt-6 rounded-2xl bg-white/55 p-5 shadow-glass">
-                  <div className="text-sm font-semibold text-slate-900">Your site, tuned for ranking</div>
+                  <div className="text-sm font-semibold text-slate-900">Bridging Traditional SEO with AI-Powered Search.
+                  </div>
                   <p className="mt-1 text-sm text-slate-600">
-                    Structured metadata, fast pages, clean URLs, and SEO fields managed from Admin CMS.
+                    With over a decade of experience, I bridge traditional search optimization and emerging AI search ecosystems, delivering proven results across diverse industries.
                   </p>
                 </div>
               </div>
@@ -79,19 +80,27 @@ export default async function HomePage() {
 
         <section className="mt-10 grid lg:grid-cols-3 gap-6">
           <GlassCard>
-            <div className="text-sm font-semibold text-slate-900">Elegant UI ✨</div>
-            <p className="mt-2 text-sm text-slate-600">Soft pastel gradients, glass cards, and smooth transitions.</p>
+            <div className="text-sm font-semibold text-slate-900">SEO for Search Engines ✨</div>
+            <p className="mt-2 text-sm text-slate-600">Increase organic visibility, traffic, keyword ranking and conversions through strategic ranking on traditional search engines like Google, Bing, DuckDuckGo etc.</p>
           </GlassCard>
           <GlassCard>
-            <div className="text-sm font-semibold text-slate-900">CMS-ready 🧠</div>
-            <p className="mt-2 text-sm text-slate-600">Admin manages blogs, users, messages, and site SEO defaults.</p>
+            <div className="text-sm font-semibold text-slate-900">Local and National SEO
+              🧠</div>
+            <p className="mt-2 text-sm text-slate-600">Drive geo-targeted traffic, local leads, and nationwide organic visibility depending on business model.</p>
           </GlassCard>
           <GlassCard>
-            <div className="text-sm font-semibold text-slate-900">Real SEO ⚡</div>
-            <p className="mt-2 text-sm text-slate-600">Per-blog metadata, keywords, OG images, and clean architecture.</p>
+            <div className="text-sm font-semibold text-slate-900">AI SEO - SEO for LLMs Platforms (AI- Powered Search Engines)
+              ⚡</div>
+            <p className="mt-2 text-sm text-slate-600">Optimize brand visibility inside AI-driven search systems such as ChatGPT, Google AI Overviews, Gemini, Perplexity, Microsoft Copilot etc.</p>
           </GlassCard>
         </section>
- <Reviews/>
+        <Reviews />
+
+        {/* Tools Section */}
+        <section className="mt-16">
+
+          <ToolsSection />
+        </section>
 
 
 

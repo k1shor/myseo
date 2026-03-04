@@ -73,6 +73,13 @@ export default function AdminHome() {
         desc: "Add, edit and manage client testimonials.",
         icon: "⭐",
         gradient: "from-sky-200/40 via-violet-200/40 to-pink-200/40"
+      },
+      {
+        href: "/admin/tools",
+        title: "Tools",
+        desc: "Manage tools displayed on homepage.",
+        icon: "🛠️",
+        gradient: "from-violet-200/40 via-sky-200/40 to-pink-200/40"
       }
     ],
     []
@@ -162,7 +169,7 @@ export default function AdminHome() {
         </div>
       </div>
 
-      
+
     </PageShell>
   );
 }
