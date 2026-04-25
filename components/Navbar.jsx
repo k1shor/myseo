@@ -14,6 +14,7 @@ const links = [
   { href: "/blogs", label: "Blogs" },
   { href: "/faq", label: "FAQ" },
   { href: "/contact", label: "Contact" },
+  { href: "/casestudy", label: "CaseStudy" },
 ];
 
 export default function Navbar() {

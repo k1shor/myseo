@@ -80,7 +80,14 @@ export default function AdminHome() {
         desc: "Manage tools displayed on homepage.",
         icon: "🛠️",
         gradient: "from-violet-200/40 via-sky-200/40 to-pink-200/40"
-      }
+      },
+      {
+        href: "/admin/casestudy",
+        title: "CaseStudy",
+        desc: "Create and edit posts + SEO fields + cover images.",
+        icon: "📝",
+        gradient: "from-pink-200/40 via-violet-200/40 to-sky-200/40"
+      },
     ],
     []
   );
