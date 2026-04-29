@@ -4,10 +4,10 @@ module.exports = {
   theme: {
     extend: {
       boxShadow: {
-        "soft": "0 12px 40px rgba(30, 41, 59, 0.12)",
-        "glass": "0 10px 30px rgba(2, 6, 23, 0.08)"
-      }
+        soft: "0 12px 40px rgba(30, 41, 59, 0.12)",
+        glass: "0 10px 30px rgba(2, 6, 23, 0.08)",
+      },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/typography")],
 };
