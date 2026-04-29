@@ -53,7 +53,7 @@ export default async function CaseStudyDetailPage({ params }) {
       <PageShell title="Not Found" kicker="CASE STUDY">
         <div className="text-center py-20 space-y-4">
           <p className="text-slate-500 text-sm">
-            This case study doesn't exist or is no longer published.
+            This case study doesn&quo;t exist or is no longer published.
           </p>
           <Link
             href="/casestudy"
@@ -183,7 +183,7 @@ export default async function CaseStudyDetailPage({ params }) {
             Ready to write your own success story?
           </div>
           <p className="mt-2 text-sm text-slate-300 max-w-sm mx-auto leading-relaxed">
-            Let's build a strategy across search, local, and AI-powered platforms.
+            Let&quo;s build a strategy across search, local, and AI-powered platforms.
           </p>
           <Link
             href="/contact"
