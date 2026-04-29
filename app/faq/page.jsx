@@ -91,7 +91,7 @@ export default function FAQPage() {
             ))
           ) : (
             <div className="text-center py-12 text-slate-500 text-sm">
-              No results found for "{search}"
+              No results found for &quot;{search}&quot;
             </div>
           )}
         </div>
@@ -100,7 +100,7 @@ export default function FAQPage() {
         <div className="mt-12 rounded-3xl bg-slate-900 p-8 text-center text-white shadow-xl">
           <h3 className="text-lg font-semibold">Still have questions?</h3>
           <p className="mt-2 text-sm text-slate-300">
-            We’re here to help you grow your digital presence.
+            We&apos;re here to help you grow your digital presence.
           </p>
           <Link
             href="/contact"

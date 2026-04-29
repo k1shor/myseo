@@ -30,7 +30,7 @@ export default async function WorkPage() {
     <PageShell title="Case Studies" kicker="OUR WORK">
       {/* Intro */}
       <p className="text-slate-600 max-w-2xl leading-relaxed">
-        Real strategies, measurable outcomes. Here's how we've helped businesses rank, grow, and win visibility across traditional search and AI-powered platforms.
+        Real strategies, measurable outcomes. Here&apos;s how we&apos;ve helped businesses rank, grow, and win visibility across traditional search and AI-powered platforms.
       </p>
 
       {items.length === 0 ? (
@@ -53,7 +53,7 @@ export default async function WorkPage() {
           Ready to be the next success story?
         </div>
         <p className="mt-2 text-sm text-slate-300 max-w-md mx-auto">
-          Let's build a strategy tailored to your goals — search engines, local maps, and AI platforms.
+          Let&apos;s build a strategy tailored to your goals — search engines, local maps, and AI platforms.
         </p>
         <Link
           href="/contact"

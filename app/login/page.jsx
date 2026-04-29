@@ -135,8 +135,8 @@ export default function LoginPage() {
                       Client note
                     </div>
                     <p className="mt-2 text-sm leading-6 text-slate-700">
-                      "Logging back in feels like coming home — everything is
-                      exactly where I left it."
+                      &quo;Logging back in feels like coming home — everything is
+                      exactly where I left it.&quo;
                     </p>
                     <div className="mt-3 text-xs font-medium text-slate-500">
                       — Returning user
