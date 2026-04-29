@@ -183,8 +183,7 @@ export default async function CaseStudyDetailPage({ params }) {
             Ready to write your own success story?
           </div>
           <p className="mt-2 text-sm text-slate-300 max-w-sm mx-auto leading-relaxed">
-            Let's build a strategy across search, local, and AI-powered
-            platforms.
+            Let's build a strategy across search, local, and AI-powered platforms.
           </p>
           <Link
             href="/contact"
