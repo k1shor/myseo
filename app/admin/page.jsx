@@ -36,28 +36,28 @@ export default function AdminHome() {
         title: "Blogs",
         desc: "Create and edit posts + SEO fields + cover images.",
         icon: "📝",
-        gradient: "from-pink-200/40 via-violet-200/40 to-sky-200/40"
+        gradient: "from-pink-200/40 via-violet-200/40 to-sky-200/40",
       },
       {
         href: "/admin/messages",
         title: "Messages",
         desc: "View contact form messages and reply.",
         icon: "💬",
-        gradient: "from-emerald-200/40 via-sky-200/40 to-violet-200/40"
+        gradient: "from-emerald-200/40 via-sky-200/40 to-violet-200/40",
       },
       {
         href: "/admin/users",
         title: "Users",
         desc: "Manage users (activate/deactivate, create users).",
         icon: "👤",
-        gradient: "from-amber-200/40 via-pink-200/40 to-violet-200/40"
+        gradient: "from-amber-200/40 via-pink-200/40 to-violet-200/40",
       },
       {
         href: "/admin/settings",
         title: "Site Settings",
         desc: "Update global SEO defaults + contact/social.",
         icon: "⚙️",
-        gradient: "from-sky-200/40 via-violet-200/40 to-emerald-200/40"
+        gradient: "from-sky-200/40 via-violet-200/40 to-emerald-200/40",
       },
       {
         href: "/admin/about",
@@ -65,28 +65,35 @@ export default function AdminHome() {
         desc: "Edit About page content + meta tags.",
         icon: "✨",
         gradient: "from-violet-200/40 via-sky-200/40 to-pink-200/40",
-        badge: "NEW"
+        badge: "NEW",
       },
       {
         href: "/admin/testimonials",
         title: "Testimonials",
         desc: "Add, edit and manage client testimonials.",
         icon: "⭐",
-        gradient: "from-sky-200/40 via-violet-200/40 to-pink-200/40"
+        gradient: "from-sky-200/40 via-violet-200/40 to-pink-200/40",
       },
       {
         href: "/admin/tools",
         title: "Tools",
         desc: "Manage tools displayed on homepage.",
         icon: "🛠️",
-        gradient: "from-violet-200/40 via-sky-200/40 to-pink-200/40"
+        gradient: "from-violet-200/40 via-sky-200/40 to-pink-200/40",
       },
       {
         href: "/admin/casestudy",
         title: "CaseStudy",
         desc: "Create and edit posts + SEO fields + cover images.",
         icon: "📝",
-        gradient: "from-pink-200/40 via-violet-200/40 to-sky-200/40"
+        gradient: "from-pink-200/40 via-violet-200/40 to-sky-200/40",
+      },
+      {
+        href: "/admin/faq",
+        title: "Faq",
+        desc: "Edit and sort out most commonly asked questions.",
+        icon: "⁉️",
+        gradient: "from-emerald-200/40 via-sky-200/40 to-violet-200/40",
       },
     ],
     []
@@ -96,18 +103,18 @@ export default function AdminHome() {
     {
       name: "Sarah Khan",
       role: "Ecommerce Founder",
-      text: "Our organic traffic doubled in 3 months. The strategy was clear, data-driven, and beautifully executed."
+      text: "Our organic traffic doubled in 3 months. The strategy was clear, data-driven, and beautifully executed.",
     },
     {
       name: "James Walker",
       role: "Startup CEO",
-      text: "From SEO to content funnels, everything felt premium. The site now converts far better than before."
+      text: "From SEO to content funnels, everything felt premium. The site now converts far better than before.",
     },
     {
       name: "Anita Sharma",
       role: "Marketing Manager",
-      text: "Professional, creative, and results-focused. Our brand visibility improved significantly."
-    }
+      text: "Professional, creative, and results-focused. Our brand visibility improved significantly.",
+    },
   ];
 
   if (!mounted || checking) {
@@ -157,13 +164,22 @@ export default function AdminHome() {
             Quick Actions
           </div>
           <div className="mt-4 flex flex-col gap-2">
-            <Link href="/admin/about" className="rounded-2xl border border-white/60 bg-white/50 px-4 py-2 text-xs font-semibold text-slate-800 shadow-glass hover:bg-white/65 transition backdrop-blur">
+            <Link
+              href="/admin/about"
+              className="rounded-2xl border border-white/60 bg-white/50 px-4 py-2 text-xs font-semibold text-slate-800 shadow-glass hover:bg-white/65 transition backdrop-blur"
+            >
               Edit About
             </Link>
-            <Link href="/admin/blogs" className="rounded-2xl border border-white/60 bg-white/50 px-4 py-2 text-xs font-semibold text-slate-800 shadow-glass hover:bg-white/65 transition backdrop-blur">
+            <Link
+              href="/admin/blogs"
+              className="rounded-2xl border border-white/60 bg-white/50 px-4 py-2 text-xs font-semibold text-slate-800 shadow-glass hover:bg-white/65 transition backdrop-blur"
+            >
               Create Blog
             </Link>
-            <Link href="/admin/settings" className="rounded-2xl border border-white/60 bg-white/50 px-4 py-2 text-xs font-semibold text-slate-800 shadow-glass hover:bg-white/65 transition backdrop-blur">
+            <Link
+              href="/admin/settings"
+              className="rounded-2xl border border-white/60 bg-white/50 px-4 py-2 text-xs font-semibold text-slate-800 shadow-glass hover:bg-white/65 transition backdrop-blur"
+            >
               Settings
             </Link>
             <Link
@@ -175,8 +191,6 @@ export default function AdminHome() {
           </div>
         </div>
       </div>
-
-
     </PageShell>
   );
 }
@@ -194,13 +208,9 @@ function Card({ href, title, desc, icon, gradient, badge }) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span>{icon}</span>
-            <div className="text-sm font-semibold text-slate-900">
-              {title}
-            </div>
+            <div className="text-sm font-semibold text-slate-900">{title}</div>
           </div>
-          {badge && (
-            <span className="badge">{badge}</span>
-          )}
+          {badge && <span className="badge">{badge}</span>}
         </div>
         <p className="mt-2 text-sm text-slate-600">{desc}</p>
       </div>
